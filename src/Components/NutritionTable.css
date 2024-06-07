@@ -1,0 +1,116 @@
+.table-wrapper{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background: gainsboro;
+    border-radius: 10px;
+    width:100%;
+
+}
+
+
+.meal-type-banner{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    padding:10px;
+    margin: 10px 0;
+    margin-left: -10px;
+    color:#FCFCF0;
+    
+    --t:10px;
+    --f :10px;
+    --r: 15px;
+
+    inset:var(--t) 0 0 0;
+    background: green;
+    box-shadow: 0 0 0 #0005;
+    padding: 0 10px var(--f) calc(10px + var(--r));
+    clip-path: 
+    polygon(0 0,100% 0,calc(100% - var(--r)) calc(50% - var(--f)/2),100% calc(100% - var(--f)), 0 calc(100% - var(--f)), var(--f) 100%, var(--f) calc(100% - var(--f)), 0 calc(100% - var(--f)));
+
+}
+
+.meal-type-banner button{
+    background: green;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    cursor: pointer;
+    margin-right: 40px;
+}
+
+#meal-type-add{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#meal-type-add input{
+    width: 200px;
+    height: 30px;
+    border: none;
+    margin: 10px;
+    margin-right: -10px;
+    background: transparent;
+    padding:10px;
+    padding-right: 30px;
+}
+
+#meal-type-add input:focus{
+    outline: none;
+    border-bottom: 1px solid black;
+}
+
+#meal-type-add button{
+    width: 30px;
+    height: 30px;
+    border: none;
+    background: green;
+    color: white;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.food-input-wrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin: 10px;
+    background: #FCFCF0;
+    border-radius: 10px;
+}
+
+.food-input-wrapper input{
+    width: 98%;
+    height: 30px;
+    border: none;
+    background: transparent;
+    padding:10px;
+}
+
+.food-input-wrapper input:focus{
+    outline: none;
+    border-bottom: 1px solid black;
+}
+
+.food-input-wrapper button{
+    width: 30px;
+    height: 30px;
+    border: none;
+    background: green;
+    color: white;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.food{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    margin: 10px;
+    background: #FCFCF0;
+    border-radius: 10px;
+}
