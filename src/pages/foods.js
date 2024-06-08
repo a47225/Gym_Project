@@ -23,7 +23,7 @@ class Food extends React.Component {
 
     async searchFood() {
         try{
-            if(document.getElementById('food-card-container')) document.getElementById('food-card-container').remove();
+            if(document.getElementById('food-card-container')) { this.setState({foodIds: []})};
             let food = document.getElementById('food-search-input').value;
             food = food.replace(' ', '%20');
             const response = await fetch(`https://api.nal.usda.gov/fdc/v1/foods/search?api_key=L0yOlAsUuTJuZCDIxfW8dFL55AGRxSnpVhttLJ2h&query=${food}&dataType=SR%20Legacy&pageSize=50&pageNumber=1&sortBy=dataType.keyword&sortOrder=asc`);
