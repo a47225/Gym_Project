@@ -10,7 +10,7 @@ class FoodCard extends React.Component {
     }
 
     render() {
-        console.log("FoodCard:",this.state.foodData);
+        console.log("rendering FoodCard");
         return(
             <div className="food-card" id={this.state.foodData.fdcId}>
                 <div className="food-card-header">

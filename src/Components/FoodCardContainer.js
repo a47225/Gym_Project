@@ -26,7 +26,6 @@ class FoodCardContainer extends React.Component {
     }
 
     componentDidMount() {
-        console.log("FoodCardContainer:",this.state.foodIds);
         this.getFoodData();
     }
 
@@ -49,7 +48,6 @@ class FoodCardContainer extends React.Component {
             }
         });
         for(let i = 0; i < this.state.foodIds.length; i++) {
-            console.log("im fetching")
             const response = await fetch(`https://api.nal.usda.gov/fdc/v1/food/${this.state.foodIds[i]}?api_key=L0yOlAsUuTJuZCDIxfW8dFL55AGRxSnpVhttLJ2h`);
             const data = await response.json();
             this.processFoodData(data);
@@ -57,7 +55,6 @@ class FoodCardContainer extends React.Component {
     }
 
     processFoodData(data) {
-        console.log("FoodCardContainer:",data);
         if(this.state.finished.includes(data.fdcId)) {
             return;
         }

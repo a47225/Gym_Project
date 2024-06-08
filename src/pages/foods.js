@@ -11,99 +11,64 @@ import FoodCardContainer from '../Components/FoodCardContainer.js';
 // components takes precedence over default styles.
 
 
-// class Food extends React.Component {
-//     constructor(props) {
-//         super(props);
-//         this.state = {
-//             foodIds: [],
-//         }
-//         this.searchFood = this.searchFood.bind(this);
-//         this.processFoodData = this.processFoodData.bind(this);
-//     }
-
-//     async searchFood() {
-//         console.log('searching');
-//         if(document.getElementById('food-card-container')) document.getElementById('food-card-container').remove();
-//         let food = document.getElementById('food-search-input').value;
-//         food = food.replace(' ', '%20');
-//         const response = await fetch(`https://api.nal.usda.gov/fdc/v1/foods/search?api_key=L0yOlAsUuTJuZCDIxfW8dFL55AGRxSnpVhttLJ2h&query=${food}&dataType=SR%20Legacy&pageSize=50&pageNumber=1&sortBy=dataType.keyword&sortOrder=asc`);
-//         const data = await response.json();
-//         this.processFoodData(data);
-//     }
-
-//     processFoodData(data) {
-//         console.log("fooods:",data);
-//         for(let i = 0; i < 3; i++) {
-//             this.setState({foodIds: [...this.state.foodIds, data.foods[i].fdcId]});
-//         }
-//         console.log("foods:",this.state.foodIds);
-//     }
-
-//     render() {
-//         return(
-//         <div className="food-page">
-//              <div id="Header" className='container-fluid'>
-//                 <h1>Nutrition is the most important part</h1>
-//                 <p>Get your meal plan and reach your goals</p>
-//                 <img className='parallax-bg' src={Background} alt="Background" />
-//              </div>
-//              <div className='content'>
-//                 <h2 className='welcome-nutrition'>Enjoy Your Meals</h2>
-//                 <div id="food-searcher-container" className='container-fluid food-searcher-container'>
-//                     <div className="food-searcher">
-//                         <input type="text" placeholder="Search for a food" id="food-search-input"/>
-//                         <button onClick={this.searchFood}><FontAwesomeIcon icon={faMagnifyingGlass} /></button>
-//                     </div>
-//                     {this.state.foodIds.length > 0 ? <FoodCardContainer foodIds={this.state.foodIds} /> : null}
-//                 </div>
-//                 <div id="meal-plan-maker-container" className="container-fluid meal-plan-content">
-//                     <div className="meal-plan-maker" id="meal-plan-maker">
-//                         <h2>Meal Plan Maker</h2>
-//                             <NutritionTable />
-//                     </div>
-//                 </div>
-//             </div>
-//         </div>
-//         );
-//     }
-// }
-
-function Food(){
-    const [foodIds, setFoodIds] = React.useState([]);
-
-    async function searchFood() {
-        console.log('searching');
-        if(document.getElementById('food-card-container')){setFoodIds([]);}
-        let food = document.getElementById('food-search-input').value;
-        food = food.replace(' ', '%20');
-        const response = await fetch(`https://api.nal.usda.gov/fdc/v1/foods/search?api_key=L0yOlAsUuTJuZCDIxfW8dFL55AGRxSnpVhttLJ2h&query=${food}&dataType=SR%20Legacy&pageSize=50&pageNumber=1&sortBy=dataType.keyword&sortOrder=asc`);
-        const data = await response.json();
-        processFoodData(data);
+class Food extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            foodIds: [],
+        }
+        this.searchFood = this.searchFood.bind(this);
+        this.processFoodData = this.processFoodData.bind(this);
     }
 
-    async function processFoodData(data) {
+    async searchFood() {
+        try{
+            if(document.getElementById('food-card-container')) document.getElementById('food-card-container').remove();
+            let food = document.getElementById('food-search-input').value;
+            food = food.replace(' ', '%20');
+            const response = await fetch(`https://api.nal.usda.gov/fdc/v1/foods/search?api_key=L0yOlAsUuTJuZCDIxfW8dFL55AGRxSnpVhttLJ2h&query=${food}&dataType=SR%20Legacy&pageSize=50&pageNumber=1&sortBy=dataType.keyword&sortOrder=asc`);
+            const data = await response.json();
+            this.processFoodData(data);
+        }
+        catch(err) {
+            switch(err) {
+                case 'TypeError: Failed to fetch':
+                    alert('Failed to fetch data from the server. Please check your internet connection.');
+                    break;
+                case "TypeError: Cannot read properties of undefined (reading 'fdcId')":
+                    alert('No food found. Please try again.');
+                    break;
+                default:
+                    alert('An error occurred. Please try again.');
+                    break;
+            }
+        }
+    }
+
+    processFoodData(data) {
         let tempFoodIds = [];
         for(let i = 0; i < 3; i++) {
             tempFoodIds.push(data.foods[i].fdcId);
         }
-        setFoodIds(tempFoodIds);
+        this.setState({foodIds: tempFoodIds});
     }
 
-    return(
+    render() {
+        return(
         <div className="food-page">
-            <div id="Header" className='container-fluid'>
+             <div id="Header" className='container-fluid'>
                 <h1>Nutrition is the most important part</h1>
                 <p>Get your meal plan and reach your goals</p>
                 <img className='parallax-bg' src={Background} alt="Background" />
-            </div>
-            <div className='content'>
+             </div>
+             <div className='content'>
                 <h2 className='welcome-nutrition'>Enjoy Your Meals</h2>
                 <div id="food-searcher-container" className='container-fluid food-searcher-container'>
                     <div className="food-searcher">
                         <input type="text" placeholder="Search for a food" id="food-search-input"/>
-                        <button onClick={searchFood}><FontAwesomeIcon icon={faMagnifyingGlass} /></button>
+                        <button onClick={this.searchFood}><FontAwesomeIcon icon={faMagnifyingGlass} /></button>
                     </div>
-                    {foodIds.length > 0 ? <FoodCardContainer foodIds={foodIds} /> : null}
+                    {this.state.foodIds.length > 0 ? <FoodCardContainer foodIds={this.state.foodIds} /> : null}
                 </div>
                 <div id="meal-plan-maker-container" className="container-fluid meal-plan-content">
                     <div className="meal-plan-maker" id="meal-plan-maker">
@@ -113,8 +78,99 @@ function Food(){
                 </div>
             </div>
         </div>
-    );
+        );
+    }
 }
+
+// function Food(){
+//     const [foodIds, setFoodIds] = React.useState([]);
+//     const [foodDataLocal, setFoodDataLocal] = React.useState({});
+
+//     async function searchFood() {
+//         console.log('searching');
+//         if(document.getElementById('food-card-container')){setFoodIds([])}
+//         let food = document.getElementById('food-search-input').value;
+//         food = food.replace(' ', '%20');
+//         const response = await fetch(`https://api.nal.usda.gov/fdc/v1/foods/search?api_key=L0yOlAsUuTJuZCDIxfW8dFL55AGRxSnpVhttLJ2h&query=${food}&dataType=SR%20Legacy&pageSize=50&pageNumber=1&sortBy=dataType.keyword&sortOrder=asc`);
+//         const data = await response.json();
+//         processFoodData(data);
+//     }
+
+//     async function processFoodData(data) {
+//         console.log(data);
+//         let tempFoodIds = [];
+//         for(let i = 0; i < 3; i++) {
+//             console.log(data.foods[i].fdcId);
+//             tempFoodIds.push(data.foods[i].fdcId);
+//         }
+//         setFoodIds(tempFoodIds);
+//     }
+
+//     async function processId(foodId) {
+//         console.log("processing id");
+//         const response = await fetch(`https://api.nal.usda.gov/fdc/v1/food/${foodId}?api_key=L0yOlAsUuTJuZCDIxfW8dFL55AGRxSnpVhttLJ2h`);
+//         const data = await response.json();
+//         console.log(data);
+//         processFoodDataLocal(data);  
+//     }
+
+//     function processFoodDataLocal(data) {
+//         console.log("processing food data local", data);
+//         setFoodDataLocal({
+//             fdcId: data.fdcId,
+//             description: data.description,
+//             foodCategory: data.foodCategory.description,
+//             itemType: data.foodPortions[0].modifier,
+//             weightPerItem: data.foodPortions[0].gramWeight,
+//             nutrients: {
+//                 calories: data.foodNutrients[2].amount,
+//                 protein: data.foodNutrients[4].amount,
+//                 fat: data.foodNutrients[5].amount,
+//                 carbohydrates: data.foodNutrients[8].amount,
+//             }
+//         });
+//     }
+//         // setFoodDataLocal({
+//         //     fdcId: data.fdcId,
+//         //     description: data.description,
+//         //     foodCategory: data.foodCategory.description,
+//         //     itemType: data.foodPortions[0].modifier,
+//         //     weightPerItem: data.foodPortions[0].gramWeight,
+//         //     nutrients: {
+//         //         calories: data.foodNutrients[2].amount,
+//         //         protein: data.foodNutrients[4].amount,
+//         //         fat: data.foodNutrients[5].amount,
+//         //         carbohydrates: data.foodNutrients[8].amount,
+//         //     }
+//         // });
+
+//     return(
+//         <div className="food-page">
+//             <div id="Header" className='container-fluid'>
+//                 <h1>Nutrition is the most important part</h1>
+//                 <p>Get your meal plan and reach your goals</p>
+//                 <img className='parallax-bg' src={Background} alt="Background" />
+//             </div>
+//             <div className='content'>
+//                 <h2 className='welcome-nutrition'>Enjoy Your Meals</h2>
+//                 <div id="food-searcher-container" className='container-fluid food-searcher-container'>
+//                     <div className="food-searcher">
+//                         <input type="text" placeholder="Search for a food" id="food-search-input"/>
+//                         <button onClick={searchFood}><FontAwesomeIcon icon={faMagnifyingGlass} /></button>
+//                     </div>
+//                     {console.log("foodIds:",foodIds)}
+//                     {foodIds.map((foodId) => {processId(foodId);return <FoodCard key={foodId} foodData={foodDataLocal} />})}
+//                 </div>
+//                 <div id="meal-plan-maker-container" className="container-fluid meal-plan-content">
+//                     <div className="meal-plan-maker" id="meal-plan-maker">
+//                         <h2>Meal Plan Maker</h2>
+//                             <NutritionTable />
+//                     </div>
+//                 </div>
+//             </div>
+//         </div>
+//     );
+// }
 
 
 
