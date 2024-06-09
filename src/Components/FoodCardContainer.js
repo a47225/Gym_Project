@@ -55,6 +55,7 @@ class FoodCardContainer extends React.Component {
     }
 
     processFoodData(data) {
+        console.log(data);
         if(this.state.finished.includes(data.fdcId)) {
             return;
         }
@@ -62,8 +63,8 @@ class FoodCardContainer extends React.Component {
             fdcId: data.fdcId,
             description: data.description,
             foodCategory: data.foodCategory.description,
-            itemType: data.foodPortions[0].modifier,
-            weightPerItem: data.foodPortions[0].gramWeight,
+            itemType: data.foodPortions !== undefined? data.foodPortions[0].modifier : data.itemType !== undefined? data.itemType : "",
+            weightPerItem: data.foodPortions !==undefined? data.foodPortions[0].gramWeight : data.weightPerItem !== undefined? data.weightPerItem : "",
             nutrients: {
                 calories: data.foodNutrients[2].amount,
                 protein: data.foodNutrients[4].amount,

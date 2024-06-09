@@ -8,7 +8,7 @@
 }
 
 
-.meal-type-banner{
+.nutrition-table-banner{
     display:flex;
     justify-content: space-between;
     align-items: center;
@@ -30,7 +30,7 @@
 
 }
 
-.meal-type-banner button{
+.nutrition-table-banner button{
     background: green;
     color: white;
     border: none;
@@ -38,6 +38,43 @@
     padding: 5px;
     cursor: pointer;
     margin-right: 40px;
+}
+
+.food-info{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    margin: 10px;
+    background: #FCFCF0;
+    border-radius: 10px;
+}
+
+.food-info-firstline{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+.food-info-secondline{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.food-info-nutrients{
+    display: flex;
+    justify-self: space-between;
+    column-gap: 10px;
+}
+
+.food-info-add button{
+    border: none;
+    background: green;
+    color: white;
+    padding: 5px;
+    border-radius: 10px;
+    cursor: pointer;
 }
 
 #meal-type-add{

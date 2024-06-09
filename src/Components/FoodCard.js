@@ -16,7 +16,8 @@ class FoodCard extends React.Component {
                 <div className="food-card-header">
                     <h3>{this.state.foodData.description}</h3>
                     <p>{this.state.foodData.foodCategory}</p>
-                    <p>Weight per {this.state.foodData.itemType}: {this.state.foodData.weightPerItem}g</p>
+                    <p>{ this.state.foodData.itemType!== ""?  "Weight per " + this.state.foodData.itemType + " : " + this.state.foodData.weightPerItem +"g" : " "}</p>
+                    <p>Id: {this.state.foodData.fdcId}</p>
                 </div>
                 <div className="food-card-body">
                     <div className="per-100">
